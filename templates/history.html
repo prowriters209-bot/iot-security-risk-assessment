@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Assessment History | IoT Secure{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <h2>Assessment History</h2>
+        <p>Review previously completed IoT security assessments.</p>
+    </div>
+
+    <a href="{{ url_for('assessment') }}" class="btn btn-primary">
+        + New Assessment
+    </a>
+</div>
+
+<div class="content-card">
+
+    {% if records %}
+
+    <div class="table-responsive">
+        <table class="table align-middle">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Device</th>
+                    <th>Device Type</th>
+                    <th>Risk Score</th>
+                    <th>Classification</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>#{{ record.id }}</td>
+                    <td>{{ record.device_name }}</td>
+                    <td>{{ record.device_type }}</td>
+                    <td>{{ record.risk_score }}</td>
+
+                    <td>
+                        <span class="risk-badge risk-{{ record.risk_level|lower }}">
+                            {{ record.risk_level }}
+                        </span>
+                    </td>
+
+                    <td>{{ record.created_at.strftime('%d/%m/%Y') }}</td>
+
+                    <td>
+                        <a href="{{ url_for('results', assessment_id=record.id) }}">
+                            View Results
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+    {% else %}
+
+    <div class="empty-state">
+        <h3>No assessments found</h3>
+        <p>Completed assessments will appear here.</p>
+        <a href="{{ url_for('assessment') }}" class="btn btn-primary">
+            Create First Assessment
+        </a>
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

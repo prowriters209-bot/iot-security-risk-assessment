@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | IoT Secure{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <h2>Dashboard Overview</h2>
+        <p>Monitor IoT device security assessments and risks.</p>
+    </div>
+
+    <a href="{{ url_for('assessment') }}" class="btn btn-primary">
+        + Start Assessment
+    </a>
+</div>
+
+<div class="row g-3 mb-4">
+
+    <div class="col-md-4">
+        <div class="stat-card">
+            <span>Total Assessments</span>
+            <h2>{{ total }}</h2>
+            <small>All recorded assessments</small>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="stat-card">
+            <span>High/Critical Risk</span>
+            <h2>{{ high_risk }}</h2>
+            <small>Devices requiring attention</small>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="stat-card">
+            <span>Average Risk Score</span>
+            <h2>{{ average_score }}<small>/100</small></h2>
+            <small>Across all assessments</small>
+        </div>
+    </div>
+
+</div>
+
+<div class="row g-3">
+
+    <div class="col-lg-5">
+        <div class="content-card">
+            <h5>Risk Distribution</h5>
+            <p class="text-muted">Assessment classification breakdown.</p>
+
+            {% if total %}
+                <canvas id="riskChart"></canvas>
+            {% else %}
+                <div class="empty-state">
+                    <h3>No assessment data yet</h3>
+                    <p>Complete your first assessment to view risk analytics.</p>
+                    <a href="{{ url_for('assessment') }}"
+                       class="btn btn-primary">Start Assessment</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-lg-7">
+        <div class="content-card">
+            <h5>Recent Assessments</h5>
+
+            {% if recent %}
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Device</th>
+                                <th>Score</th>
+                                <th>Risk</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for item in recent %}
+                            <tr>
+                                <td>
+                                    <strong>{{ item.device_name }}</strong>
+                                    <small class="d-block text-muted">
+                                        {{ item.device_type }}
+                                    </small>
+                                </td>
+
+                                <td>{{ item.risk_score }}/100</td>
+
+                                <td>
+                                    <span class="risk-badge risk-{{ item.risk_level|lower }}">
+                                        {{ item.risk_level }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <a href="{{ url_for('results', assessment_id=item.id) }}">
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <h3>Nothing to display</h3>
+                    <p>Your completed assessments will appear here.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{% if total %}
+<script>
+    const riskCounts = {{ risk_counts|tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}New Assessment | IoT Secure{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <h2>New IoT Security Assessment</h2>
+        <p>Enter device information and security configuration.</p>
+    </div>
+</div>
+
+<form method="POST" class="content-card">
+
+    <h5>1. Device Information</h5>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-6">
+            <label class="form-label">Device Name</label>
+            <input type="text" name="device_name"
+                   class="form-control"
+                   placeholder="e.g. Smart Home Camera"
+                   required maxlength="150">
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Device Type</label>
+            <select name="device_type" class="form-select" required>
+                <option value="">Select device type</option>
+                <option>Smart Camera</option>
+                <option>Smart Thermostat</option>
+                <option>Smart Door Lock</option>
+                <option>Wearable Device</option>
+                <option>Industrial IoT Sensor</option>
+                <option>Smart Meter</option>
+                <option>Other IoT Device</option>
+            </select>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <h5>2. Security Configuration</h5>
+
+    <p class="text-muted">
+        Select the option that best describes the device.
+        Choose Unknown where information is unavailable.
+    </p>
+
+    {% set labels = {
+        'network_exposure': 'Network Exposure',
+        'authentication': 'Authentication',
+        'encryption': 'Encryption',
+        'firmware_updates': 'Firmware Updates',
+        'access_control': 'Access Control',
+        'data_protection': 'Data Protection',
+        'default_credentials': 'Default Credentials',
+        'open_services': 'Exposed Services',
+        'logging': 'Security Logging'
+    } %}
+
+    {% set descriptions = {
+        'network_exposure': 'How is the device connected or exposed?',
+        'authentication': 'How are users authenticated?',
+        'encryption': 'How is information encrypted?',
+        'firmware_updates': 'How are firmware updates managed?',
+        'access_control': 'How are device permissions controlled?',
+        'data_protection': 'How is device data protected?',
+        'default_credentials': 'Have manufacturer default credentials been changed?',
+        'open_services': 'How many unnecessary or exposed services are present?',
+        'logging': 'Are security events recorded?'
+    } %}
+
+    {% for field, values in options.items() %}
+
+        <div class="assessment-field">
+            <label class="form-label fw-semibold">
+                {{ loop.index }}. {{ labels[field] }}
+            </label>
+
+            <small class="d-block text-muted mb-2">
+                {{ descriptions[field] }}
+            </small>
+
+            <select name="{{ field }}" class="form-select" required>
+
+                {% for value in values %}
+                    <option value="{{ value }}"
+                        {% if value == 'unknown' %}selected{% endif %}>
+                        {{ value.replace('_', ' ').title() }}
+                    </option>
+                {% endfor %}
+
+            </select>
+        </div>
+
+    {% endfor %}
+
+    <div class="mt-4 d-flex gap-2">
+        <button type="submit" class="btn btn-primary">
+            Calculate Risk
+        </button>
+
+        <a href="{{ url_for('dashboard') }}"
+           class="btn btn-outline-secondary">Cancel</a>
+    </div>
+
+</form>
+
+{% endblock %}

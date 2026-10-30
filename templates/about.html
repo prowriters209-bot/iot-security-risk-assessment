@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}About | IoT Secure{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <h2>About the Assessment Tool</h2>
+        <p>Understanding the purpose and assessment methodology.</p>
+    </div>
+</div>
+
+<div class="content-card mb-4">
+
+    <h5>Project Overview</h5>
+
+    <p>
+        The IoT Security Risk Assessment Tool is a Python-based prototype
+        designed to evaluate selected security configurations of Internet
+        of Things devices.
+    </p>
+
+    <p>
+        It examines configuration areas including network exposure,
+        authentication, encryption, firmware updates, access control,
+        data protection, exposed services and security logging.
+    </p>
+
+</div>
+
+<div class="content-card mb-4">
+
+    <h5>Assessment Methodology</h5>
+
+    <p>
+        The application uses a transparent weighted rule-based model.
+        Each security factor receives a risk value and a weighting.
+        The weighted values are combined to produce a score between
+        0 and 100.
+    </p>
+
+    <ul>
+        <li>0–24.99: Low risk</li>
+        <li>25–49.99: Medium risk</li>
+        <li>50–74.99: High risk</li>
+        <li>75–100: Critical risk</li>
+    </ul>
+
+</div>
+
+<div class="content-card">
+
+    <h5>Important Limitations</h5>
+
+    <p>
+        The prototype evaluates information entered by the user.
+        It does not perform penetration testing, network scanning,
+        firmware analysis or automatic vulnerability verification.
+    </p>
+
+    <p>
+        Its scores are indicative outputs from the prototype's
+        predefined rules, not certified security ratings.
+    </p>
+
+</div>
+
+{% endblock %}

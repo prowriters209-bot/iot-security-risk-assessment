@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Assessment Results | IoT Secure{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <h2>Assessment Results</h2>
+        <p>Security assessment for {{ record.device_name }}</p>
+    </div>
+
+    <a href="{{ url_for('download_report', assessment_id=record.id) }}"
+       class="btn btn-primary">Download PDF Report</a>
+</div>
+
+<div class="row g-3 mb-4">
+
+    <div class="col-md-6">
+        <div class="stat-card">
+            <span>Risk Score</span>
+            <h2>{{ record.risk_score }}<small>/100</small></h2>
+            <small>Higher scores indicate greater configuration risk.</small>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="stat-card">
+            <span>Risk Classification</span>
+            <h2>
+                <span class="risk-badge risk-{{ record.risk_level|lower }}">
+                    {{ record.risk_level }}
+                </span>
+            </h2>
+            <small>Based on the prototype assessment rules.</small>
+        </div>
+    </div>
+
+</div>
+
+<div class="content-card mb-4">
+    <h5>Device Information</h5>
+
+    <p><strong>Name:</strong> {{ record.device_name }}</p>
+    <p><strong>Type:</strong> {{ record.device_type }}</p>
+    <p><strong>Date:</strong> {{ record.created_at.strftime('%d %B %Y, %H:%M') }}</p>
+</div>
+
+<div class="content-card mb-4">
+    <h5>Identified Security Weaknesses</h5>
+
+    {% if record.findings %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Security Area</th>
+                        <th>Configuration</th>
+                        <th>Risk Contribution</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for finding in record.findings %}
+                    <tr>
+                        <td>{{ finding.factor }}</td>
+                        <td>{{ finding.value }}</td>
+                        <td>{{ finding.weighted_score }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>No elevated-risk configuration factors were identified.</p>
+    {% endif %}
+</div>
+
+<div class="content-card mb-4">
+    <h5>Security Recommendations</h5>
+
+    {% for item in record.recommendations %}
+        <div class="recommendation-item">
+            <strong>{{ item.area }}</strong>
+            <p>{{ item.recommendation }}</p>
+        </div>
+    {% else %}
+        <p>No additional recommendations were generated.</p>
+    {% endfor %}
+</div>
+
+<div class="alert alert-info">
+    This is a configuration-based assessment. It does not scan a live
+    network or independently confirm vulnerabilities.
+</div>
+
+<a href="{{ url_for('assessment') }}" class="btn btn-primary">
+    Assess Another Device
+</a>
+
+{% endblock %}

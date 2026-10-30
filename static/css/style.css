@@ -1,0 +1,303 @@
+:root {
+    --navy: #172b4d;
+    --navy-light: #243d62;
+    --background: #f4f6fa;
+    --text: #263449;
+    --muted: #758196;
+    --border: #e6eaf0;
+    --primary: #2563eb;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--background);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+}
+
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 245px;
+    background: var(--navy);
+    color: white;
+    padding: 25px 16px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 5px 10px 35px;
+}
+
+.brand-icon {
+    font-size: 30px;
+}
+
+.brand strong,
+.brand small {
+    display: block;
+}
+
+.brand small {
+    color: #b9c8df;
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+.nav-label {
+    color: #9eafc8;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 18px 10px 8px;
+}
+
+.nav-link-custom {
+    color: #dce5f1;
+    text-decoration: none;
+    padding: 12px 10px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.nav-link-custom:hover {
+    color: white;
+    background: var(--navy-light);
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding: 20px 10px 0;
+    color: #aabbd1;
+}
+
+.sidebar-footer small {
+    display: block;
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.topbar {
+    height: 75px;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 35px;
+}
+
+.topbar small {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.page-content {
+    padding: 32px;
+    max-width: 1500px;
+    margin: auto;
+}
+
+.page-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.page-heading h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.page-heading p {
+    color: var(--muted);
+    margin: 0;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.stat-card,
+.content-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+}
+
+.stat-card {
+    min-height: 145px;
+}
+
+.stat-card span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.stat-card h2 {
+    font-size: 30px;
+    margin: 12px 0 5px;
+    font-weight: 700;
+}
+
+.stat-card h2 small {
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.stat-card > small {
+    color: var(--muted);
+}
+
+.content-card h5 {
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 35px 15px;
+}
+
+.empty-state h3 {
+    font-size: 17px;
+}
+
+.empty-state p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.risk-badge {
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.risk-low {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.risk-medium {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.risk-high {
+    background: #ffedd5;
+    color: #9a3412;
+}
+
+.risk-critical {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.assessment-field {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.assessment-field .form-select {
+    max-width: 650px;
+}
+
+.recommendation-item {
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.recommendation-item p {
+    color: var(--muted);
+    margin: 7px 0 0;
+}
+
+.table {
+    font-size: 13px;
+}
+
+.table thead th {
+    color: var(--muted);
+    font-weight: 600;
+    background: #f8fafc;
+    white-space: nowrap;
+}
+
+@media (max-width: 800px) {
+    .sidebar {
+        width: 190px;
+    }
+
+    .page-content {
+        padding: 18px;
+    }
+
+    .topbar {
+        padding: 0 18px;
+    }
+}
+
+@media (max-width: 600px) {
+    .app-layout {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .brand {
+        padding-bottom: 10px;
+    }
+
+    .nav-label,
+    .sidebar-footer {
+        display: none;
+    }
+
+    .nav-link-custom {
+        display: inline-block;
+        padding: 8px;
+    }
+
+    .topbar {
+        height: auto;
+        min-height: 65px;
+        gap: 10px;
+    }
+
+    .page-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
