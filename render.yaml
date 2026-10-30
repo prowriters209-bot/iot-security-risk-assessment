@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: iot-security-risk-assessment
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
